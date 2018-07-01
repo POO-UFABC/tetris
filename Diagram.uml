@@ -78,7 +78,7 @@ class Display {
 
 class State{
   -currentState:State = null
-  -keyManager:keyManager=null
+  -keyManager:KeyManager=null
   __
   +setState(State)
   +setKeyManager(KeyManager)
