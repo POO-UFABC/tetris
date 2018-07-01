@@ -1,0 +1,104 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "Tetris"{
+  class Game  
+}
+
+package "io"{
+  class KeyManager
+  class Display
+}
+
+package "GameStates"{
+  class State
+  class GameState
+  class MenuState
+}
+
+State o-- GameState
+State o-- MenuState
+
+class Game {
+  -display: Display
+  -width: int
+  -height: int
+  +title: String
+  -running: boolean = false
+  -thread: Thread
+  -bs: BufferStrategy
+  -g: Graphics
+  +gameState: State
+  +menuState: State
+  -keyManager: KeyManager
+  __
+  +Game(title: String)
+  -init()
+  -update()
+  -render()
+  +start()
+  +run()
+  +stop()
+  +getKeyManager(): KeyManager
+  +getWidth(): int
+  +getHeight(): int
+  +getDisplay(): Display
+}
+
+class KeyManager {
+  -down:boolean
+  -left:boolean
+  -right:boolean
+  -zero:boolean
+  __
+  +setKey(KeyEvent, boolean)
+  +keyPressed(KeyEvent)
+  +keyReleased(KeyEvent)
+  +keyTyped(KeyEvent)
+  +getDown():boolean
+  +getLeft():boolean
+  +getRight():boolean
+  +getZero():boolean
+}
+
+class Display {
+  -frame:JFrame
+  -canvas:Canvas
+  -title:String
+  -width:int
+  -height:int
+  __
+  +Display(String, int, int)
+  -createDisplay()
+  +getCanvas():Canvas
+  +getFrame():JFrame
+  +getWidth():int
+  +getHeight():int
+}
+
+class State{
+  -currentState:State = null
+  -keyManager:keyManager=null
+  __
+  +setState(State)
+  +setKeyManager(KeyManager)
+  +getState():State
+  +getKeyManager():KeyManager
+  +update()
+  +render(Graphics)
+}
+
+class GameState{
+  __
+  +update()
+  +render(Graphics)
+
+}
+
+class MenuState{
+  __
+  +update()
+  +render(Graphics)
+}
+
+@enduml
