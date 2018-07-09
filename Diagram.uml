@@ -1,104 +1,103 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-package "Tetris"{
-  class Game  
-}
+GameCore o-left- GameObject
+GameObject o-left- Transform
+Transform o-left- Vector2D
+GameObject <|-down- Stone
+Stone o-right- Shape
+Stone <|-- Z
+Stone <|-- S
+Stone <|-- J
+Stone <|-- L
+Stone <|-- O
+Stone <|-- I
+Stone <|-- T
 
-package "io"{
-  class KeyManager
-  class Display
-}
-
-package "GameStates"{
-  class State
-  class GameState
-  class MenuState
-}
-
-State o-- GameState
-State o-- MenuState
-
-class Game {
-  -display: Display
-  -width: int
-  -height: int
-  +title: String
-  -running: boolean = false
-  -thread: Thread
-  -bs: BufferStrategy
-  -g: Graphics
-  +gameState: State
-  +menuState: State
-  -keyManager: KeyManager
+class GameCore{
+  gameObject:ArrayList<GameObject>
   __
-  +Game(title: String)
-  -init()
-  -update()
-  -render()
+  +GameCore()
+  +gameLoop()
+}
+
+class GameObject{
+  +transform:Transform
+  __
   +start()
-  +run()
-  +stop()
-  +getKeyManager(): KeyManager
-  +getWidth(): int
-  +getHeight(): int
-  +getDisplay(): Display
-}
-
-class KeyManager {
-  -down:boolean
-  -left:boolean
-  -right:boolean
-  -zero:boolean
-  __
-  +setKey(KeyEvent, boolean)
-  +keyPressed(KeyEvent)
-  +keyReleased(KeyEvent)
-  +keyTyped(KeyEvent)
-  +getDown():boolean
-  +getLeft():boolean
-  +getRight():boolean
-  +getZero():boolean
-}
-
-class Display {
-  -frame:JFrame
-  -canvas:Canvas
-  -title:String
-  -width:int
-  -height:int
-  __
-  +Display(String, int, int)
-  -createDisplay()
-  +getCanvas():Canvas
-  +getFrame():JFrame
-  +getWidth():int
-  +getHeight():int
-}
-
-class State{
-  -currentState:State = null
-  -keyManager:KeyManager=null
-  __
-  +setState(State)
-  +setKeyManager(KeyManager)
-  +getState():State
-  +getKeyManager():KeyManager
   +update()
-  +render(Graphics)
+  +draw()
 }
 
-class GameState{
+class Transform{
+  +pos:Vector2D
+  +scale:Vector2D
   __
-  +update()
-  +render(Graphics)
+  +Transform()
+  +Transform(Vector2D, Vector2D)
+}
+
+class Vector2D{
+  -vector:double[2]
+  __
+  +Vector2D()
+  +Vector2D(double, double)
+  +x(double)
+  +y(double)
+  +x():double
+  +y():double
+  +vector():double[2]
+  +vector(double[2])
+  +scalar(double)
+  +sum(Vector2D)
+}
+
+class Shape{
+  -tileMap:int[][]
+  __
 
 }
 
-class MenuState{
+class Stone{
+  -color:int
+  -state:Shape[]
   __
-  +update()
-  +render(Graphics)
+
+}
+
+class Z{
+  __
+  +Z()
+}
+
+class L{
+  __
+  +L()
+}
+
+class I{
+  __
+  +I()
+}
+
+class T{
+  __
+  +T()
+}
+
+class J{
+  __
+  +J()
+}
+
+class O{
+  __
+  +O()
+}
+
+class S{
+  __
+  +S()
 }
 
 @enduml
