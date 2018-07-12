@@ -39,9 +39,11 @@ public class EstruturaFixa extends Estrutura {
 		this.altura = altura;
 	}
     
-	// Este método será sempre visto da perspectiva da Estrutura Fixa. Portanto, futuramente será um método da sub classe Estrutura Fixa 
-	public void addBlocos(EstruturaMovel movel){
+	// Este método irá mesclar as estruturas fixa e móvel (Somente para peças)
+	public void addBlocos(Peca movel){
 		Bloco[][] blocos = movel.getBlocos();
+
+		// Caso, no momento de mesclar, hajam linhas completas, deverá haver o deslocamento de quaisquer blocos acima da maior linha
 		int maiorLinha = 0;
 		for(int i = 0; i < 5; i++)
 			for(int j = 0; j < 5; j++)
@@ -53,6 +55,23 @@ public class EstruturaFixa extends Estrutura {
 				limpaLinha(y);
 			}
 		}
+		movel.setBlocos(null);			
+		if (maiorLinha > 0) {
+			for (int y = maiorLinha; y > 0; y--){
+				if (y == maiorLinha){
+					//Código para fazer mover as linhas de cima.
+					//Meu cérebro está com pane e não estou conseguindo tirar agora
+					//O código vai rastrear linha por linha, fazendo mover as de cima.
+				}
+			}
+		}
+	}
+
+	public void addBlocos(EstruturaMovel movel){
+		Bloco[][] blocos = movel.getBlocos();
+		for(int i = 0; i < 1; i++)
+			for(int j = 1; j < this.getLargura(); j++)
+				this.setBloco(i + movel.getPosX(), j + movel.getPosY(), blocos[i][j]);
 		movel.setBlocos(null);			
 		//if (maiorLinha > 0)
 	}
@@ -96,5 +115,16 @@ public class EstruturaFixa extends Estrutura {
 			// Se passou por todos os testes, linha completa, retorna true;
 		}			
 		return true;
+	}
+
+	@Override
+	public boolean existeBloco(int x, int y){
+		try{
+			return (this.getBlocos()[x][y] != null);
+		}
+		catch (Exception e){
+			if (this.getAltura() > y) return true;
+			return false;
+		}		
 	}
 }

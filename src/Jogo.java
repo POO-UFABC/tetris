@@ -116,10 +116,11 @@ public class Jogo {
 		pecinha[1][3] = new Bloco("x");
 
 		peca = new Peca(pecinha);	
-		peca.andaX(11, fixa);
+		peca.andaX(-8, fixa);
 		while(peca.getBlocos() != null){
 			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
+			peca.andaX(-1, fixa);
+			peca.andaY(1, fixa);			
 		}
 		printarCena(fixa);
 
