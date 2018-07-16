@@ -41,11 +41,18 @@ public class Peca extends EstruturaMovel {
 			for(int j = 0; j < 5; j++){
 				if(fixa.existeBloco(posX + i, posY + j)){
 					if(tempBloco[i][j] != null){
-						System.out.println(i + " " + j + " " + posX + " " + posY);
 						return true;
 					}						
 				}
 			}				
 		return false;
+	}
+
+	@Override
+	public void andaY(int y, EstruturaFixa fixa) {
+		if (fixa.existeBlocoAbaixo(this)){
+			fixa.addBlocos(this);
+		} 		
+		this.setPosY(this.getPosY() - y);
 	}
 }

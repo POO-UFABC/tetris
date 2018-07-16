@@ -1,6 +1,6 @@
 package base;
 
-public class Estrutura {
+public abstract class Estrutura {
 	private Bloco[][] blocos;
 	
 	public void setBlocos(Bloco[][] blocos) {
@@ -18,7 +18,6 @@ public class Estrutura {
 		}
 		catch (Exception e){
 			return true;
-		}
-		
+		}		
 	}
 }

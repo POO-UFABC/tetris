@@ -43,35 +43,62 @@ public class EstruturaFixa extends Estrutura {
 	public void addBlocos(Peca movel){
 		Bloco[][] blocos = movel.getBlocos();
 
+
 		// Caso, no momento de mesclar, hajam linhas completas, deverá haver o deslocamento de quaisquer blocos acima da maior linha
 		int maiorLinha = 0;
+		int menorLinha = this.getAltura();
 		for(int i = 0; i < 5; i++)
 			for(int j = 0; j < 5; j++)
 				this.setBloco(i + movel.getPosX(), j + movel.getPosY(), blocos[i][j]);
 		for(int y = 1; y < this.getAltura(); y++){
 			if(linhaCompleta(y)) {
-				System.out.println("Linha: " + y);
 				maiorLinha = y;
+				if(menorLinha > y) menorLinha = y;
 				limpaLinha(y);
 			}
 		}
 		movel.setBlocos(null);			
 		if (maiorLinha > 0) {
-			for (int y = maiorLinha; y > 0; y--){
-				if (y == maiorLinha){
-					//Código para fazer mover as linhas de cima.
-					//Meu cérebro está com pane e não estou conseguindo tirar agora
-					//O código vai rastrear linha por linha, fazendo mover as de cima.
+			//Significa que houve algum "Apagamento"
+			EstruturaMovel tempMovel;
+			for (int y = menorLinha + 1; y < this.getAltura(); y++){
+				//Vamos até menorLinha + 5 pois a peça mais alta tem 4 blocos
+				if(y < this.getAltura()){
+					//Temos de verificar se não estamos verificando alto de mais
+					tempMovel = new EstruturaMovel(1, y, swapBlocos(y));
+					//swapBloco (ver código abaixo) devolve os blocos naquela linha, e tira estes blocos do null
+					//basicamente trocamos (dai o swap) os blocos de estrutura
+					while(tempMovel.getBlocos() != null){
+						//Andamos o quanto dá
+						//printarCena(this, tempMovel);
+						tempMovel.andaY(1, this);
+					} 						
 				}
+				//Chegado aqui, o trabalho desta linha está completo
 			}
 		}
 	}
 
+	private Bloco[][] swapBlocos(int linha){
+		boolean houveBloco = false;
+		Bloco[][] blocoTrocado = new Bloco[this.getLargura()-2][1];
+		for(int x = 1; x < this.getLargura() - 1; x++){
+			//Da o bloco para o bloco trocado
+			blocoTrocado[x-1][0] = this.getBlocos()[x][linha];
+			houveBloco = this.existeBloco(x, linha) || houveBloco;
+			//Tira o bloco do fixo
+			this.getBlocos()[x][linha] = null;
+		}
+		if(houveBloco)	
+			return blocoTrocado;
+		//Esse passo acelera o andaY.
+		return null;
+	}
+
 	public void addBlocos(EstruturaMovel movel){
 		Bloco[][] blocos = movel.getBlocos();
-		for(int i = 0; i < 1; i++)
-			for(int j = 1; j < this.getLargura(); j++)
-				this.setBloco(i + movel.getPosX(), j + movel.getPosY(), blocos[i][j]);
+		for(int x = 1; x < this.getLargura() - 1; x++)
+			this.setBloco(x, movel.getPosY(), blocos[x-1][0]);
 		movel.setBlocos(null);			
 		//if (maiorLinha > 0)
 	}
@@ -83,25 +110,32 @@ public class EstruturaFixa extends Estrutura {
 
 	private void limpaLinha(int linha){
 		for (int x = 1; x < this.getLargura() - 1; x++){
-			super.getBlocos()[x][linha] = null;
+			this.getBlocos()[x][linha] = null;
 		}
 	}
 
 	public void setBloco(int x, int y, Bloco bloco){
-		//System.out.println(x + " " + y);
 		if (bloco != null) super.getBlocos()[x][y] = bloco;
 	}
 
-	// Estaremos sempre passando as coisas para a estrutura fixa. Não tem porque termos métodos muito profundos no móvel, se ele sumirá assim que encontrar uma colisão.
-	public boolean existeBlocoAbaixo(EstruturaMovel movel){
+	// Estaremos sempre passando as coisas para a estrutura fixa. 
+	// Não tem porque termos métodos muito profundos no móvel, se ele sumirá assim que encontrar uma colisão.
+	public boolean existeBlocoAbaixo(Peca movel){
 		int posX = movel.getPosX();
 		int posY = movel.getPosY();
-		// int largura = this.getLargura();
-		// int altura = this.getAltura();
 		//Por enquanto está iterando todos os blocos de móvel (que provavelmente serão, no máximo, 25 blocos). Talvez haja solução melhor
 		for (int i = 0; i<5; i++)
 			for(int j = 0; j<5; j++)
 				if (movel.existeBloco(i, j) && this.existeBloco(posX + i, posY + j - 1)) return true;
+		//Se em nenhum momento havia um bloco na móvel, com um bloco diretamente abaixo na fixa, ele retornará falso.
+		return false;
+	}
+	public boolean existeBlocoAbaixo(EstruturaMovel movel){
+		int posX = movel.getPosX();
+		int posY = movel.getPosY();
+		//Por enquanto está iterando todos os blocos de móvel (que provavelmente serão, no máximo, 25 blocos). Talvez haja solução melhor
+		for(int x = 1; x < this.getAltura()-2; x++)
+			if (movel.existeBloco(x, 0) && this.existeBloco(x+1, posY-1)) return true;
 		//Se em nenhum momento havia um bloco na móvel, com um bloco diretamente abaixo na fixa, ele retornará falso.
 		return false;
     }
@@ -125,6 +159,26 @@ public class EstruturaFixa extends Estrutura {
 		catch (Exception e){
 			if (this.getAltura() > y) return true;
 			return false;
-		}		
+		}
+	}
+
+	//Deixar isso aqui por enquanto para testar caso algo dê errado;
+	public static void printarCena(EstruturaFixa fixa, EstruturaMovel peca){
+		Bloco[][] blocosFixa = fixa.getBlocos();
+		Bloco[][] blocosMovel = peca.getBlocos();
+		String str = "";
+		for (int y = fixa.getAltura() - 1; y > -1; y--){
+			for (int x = 0; x < fixa.getLargura(); x++){
+				if (y == peca.getPosY() && x > 0 && x < fixa.getLargura()-1){
+					str = str + (blocosMovel[x-1][0] == null ? " " : blocosMovel[x-1][0]);
+				}
+				else{
+					str = str + (blocosFixa[x][y] == null ? " " : "0");
+				}				
+			}				
+			System.out.println(str);
+			str = "";
+		}
+		System.out.println(str);		
 	}
 }

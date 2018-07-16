@@ -10,9 +10,13 @@ public class Jogo {
 		pecinha[3][2] = new Bloco("x");
 		pecinha[4][2] = new Bloco("x");
 		pecinha[1][2] = new Bloco("x");
+		pecinha[2][3] = new Bloco("x");
+		pecinha[3][3] = new Bloco("x");
+		pecinha[4][3] = new Bloco("x");
+		pecinha[1][3] = new Bloco("x");
 
-		//  xx 
-		// xx
+		// xxxx
+		// xxxx
 
 		Peca peca = new Peca(pecinha);
 		peca.andaX(-13, fixa);
@@ -110,17 +114,43 @@ public class Jogo {
 		}
 		printarCena(fixa);
 
-		pecinha[2][3] = new Bloco("x");
-		pecinha[3][3] = new Bloco("x");
-		pecinha[4][3] = new Bloco("x");
-		pecinha[1][3] = new Bloco("x");
+		pecinha[2][3] = null;
+		pecinha[3][3] = null;
+		pecinha[4][3] = null;
+		pecinha[1][3] = null;
 
 		peca = new Peca(pecinha);	
-		peca.andaX(-8, fixa);
+		peca.rotacionar(fixa);
+		peca.andaX(7, fixa);
 		while(peca.getBlocos() != null){
 			printarCena(fixa, peca);
-			peca.andaX(-1, fixa);
-			peca.andaY(1, fixa);			
+			peca.andaX(1, fixa);
+			peca.andaY(1, fixa);
+		}
+		printarCena(fixa);
+
+		pecinha[4][2] = null;
+		pecinha[3][3] = new Bloco("x");
+
+		peca = new Peca(pecinha);	
+		peca.rotacionar(fixa);
+		peca.andaX(10, fixa);
+		while(peca.getBlocos() != null){
+			printarCena(fixa, peca);
+			//peca.andaX(1, fixa);
+			peca.andaY(1, fixa);
+		}
+		printarCena(fixa);
+
+		peca = new Peca(pecinha);	
+		peca.rotacionar(fixa);
+		peca.rotacionar(fixa);
+		peca.rotacionar(fixa);
+		peca.andaX(12, fixa);
+		while(peca.getBlocos() != null){
+			printarCena(fixa, peca);
+			//peca.andaX(1, fixa);
+			peca.andaY(1, fixa);
 		}
 		printarCena(fixa);
 
@@ -143,7 +173,7 @@ public class Jogo {
 		for (int y = fixa.getAltura() - 1; y > -1; y--){
 			for (int x = 0; x < fixa.getLargura(); x++){
 				//System.out.println(x + ", " + y);
-				str = str + (blocos[x][y] == null ? " " : blocos[x][y]);
+				str = str + (blocos[x][y] == null ? " " : ".");
 			}				
 			System.out.println(str);
 			str = "";
@@ -157,11 +187,11 @@ public class Jogo {
 		for (int y = fixa.getAltura() - 1; y > -1; y--){
 			for (int x = 0; x < fixa.getLargura(); x++){
 				//System.out.println(x + ", " + y);
-				if (x >= peca.getPosX() && x < peca.getPosX() + 5 && y >= peca.getPosY() && y < peca.getPosY() + 5){
+				if (x >= peca.getPosX() && x < peca.getPosX() + 5 && y >= peca.getPosY() && y < peca.getPosY() + 5 && peca.existeBloco(x - peca.getPosX(), y - peca.getPosY())){
 					str = str + (blocosMovel[x - peca.getPosX()][y - peca.getPosY()] == null ? " " : blocosMovel[x - peca.getPosX()][y - peca.getPosY()]);
 				}
 				else{
-					str = str + (blocosFixa[x][y] == null ? " " : "0");
+					str = str + (blocosFixa[x][y] == null ? " " : ".");
 				}				
 			}				
 			System.out.println(str);
