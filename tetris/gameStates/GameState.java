@@ -3,6 +3,8 @@ package gameStates;
 import java.awt.Graphics;
 import java.awt.Color;
 
+import gameStates.MenuState;
+
 public class GameState extends State{	
 	public void update() {
 	  if (State.getKeyManager().getZero()) {
@@ -10,6 +12,8 @@ public class GameState extends State{
 		}
 		if (State.getKeyManager().getDown()) {
 		  System.out.println("(GAME S) DOWN");
+		  MenuState menuState = new MenuState();
+	    State.setState(menuState);
 		}
 		if (State.getKeyManager().getLeft()) {
 		  System.out.println("(GAME S) LEFT");
