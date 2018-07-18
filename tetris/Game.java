@@ -54,11 +54,10 @@ public class Game implements Runnable {
 		display = new Display(title, width, height);//Título, altura, largura da janela
 		display.getFrame().addKeyListener(keyManager);
 			
-		gameState = new GameState();
+		//gameState = new GameState();
 		menuState = new MenuState();
 		
 		State.setState(menuState);
-		System.out.println(this.keyManager);
 		State.setKeyManager(this.keyManager);
 	}
 	
@@ -146,7 +145,6 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 	
 	public KeyManager getKeyManager() {
 		return keyManager;
