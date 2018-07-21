@@ -5,123 +5,37 @@ public class Jogo {
 	public static void main(String[] args) {
 		EstruturaFixa fixa = new EstruturaFixa();
 		
-		Bloco[][] pecinha = new Bloco[5][5];
-		pecinha[2][2] = new Bloco("x");
-		pecinha[3][2] = new Bloco("x");
-		pecinha[4][2] = new Bloco("x");
-		pecinha[1][2] = new Bloco("x");
-		pecinha[2][3] = new Bloco("x");
-		pecinha[3][3] = new Bloco("x");
-		pecinha[4][3] = new Bloco("x");
-		pecinha[1][3] = new Bloco("x");
+		Peca peca = new PecaL("+");
 
-		// xxxx
-		// xxxx
-
-		Peca peca = new Peca(pecinha);
-		peca.andaX(-13, fixa);
 		while(peca.getBlocos() != null){
 			printarCena(fixa, peca);
+			//peca.andaX(1, fixa);
 			peca.andaY(1, fixa);
 		}
 		printarCena(fixa);
 
-		peca = new Peca(pecinha);	
-		peca.andaX(-9, fixa);
+		peca = new PecaZ("+");
+
 		while(peca.getBlocos() != null){
 			printarCena(fixa, peca);
+			//peca.andaX(1, fixa);
 			peca.andaY(1, fixa);
 		}
 		printarCena(fixa);
 
-		peca = new Peca(pecinha);	
-		peca.andaX(-5, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);	
-		peca.andaX(-1, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);	
-		peca.andaX(3, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);	
-		peca.andaX(7, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);
-		peca.andaX(-13, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);	
-		peca.andaX(-9, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);	
-		peca.andaX(-5, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);	
-		peca.andaX(-1, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);	
-		peca.andaX(3, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		peca = new Peca(pecinha);	
-		peca.andaX(7, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
-
-		pecinha[2][3] = null;
-		pecinha[3][3] = null;
-		pecinha[4][3] = null;
-		pecinha[1][3] = null;
-
-		peca = new Peca(pecinha);	
+		peca = new PecaZ("+");
 		peca.rotacionar(fixa);
-		peca.andaX(7, fixa);
+
+		while(peca.getBlocos() != null){
+			printarCena(fixa, peca);
+			//peca.andaX(1, fixa);
+			peca.andaY(1, fixa);
+		}
+		printarCena(fixa);
+
+		peca = new PecaT("+");
+		peca.rotacionar(fixa);
+
 		while(peca.getBlocos() != null){
 			printarCena(fixa, peca);
 			peca.andaX(1, fixa);
@@ -129,30 +43,17 @@ public class Jogo {
 		}
 		printarCena(fixa);
 
-		pecinha[4][2] = null;
-		pecinha[3][3] = new Bloco("x");
+		peca = new PecaQuadrado("+");		
 
-		peca = new Peca(pecinha);	
-		peca.rotacionar(fixa);
-		peca.andaX(10, fixa);
 		while(peca.getBlocos() != null){
 			printarCena(fixa, peca);
-			//peca.andaX(1, fixa);
+			peca.rotacionar(fixa);
+			peca.andaX(1, fixa);
 			peca.andaY(1, fixa);
 		}
 		printarCena(fixa);
 
-		peca = new Peca(pecinha);	
-		peca.rotacionar(fixa);
-		peca.rotacionar(fixa);
-		peca.rotacionar(fixa);
-		peca.andaX(12, fixa);
-		while(peca.getBlocos() != null){
-			printarCena(fixa, peca);
-			//peca.andaX(1, fixa);
-			peca.andaY(1, fixa);
-		}
-		printarCena(fixa);
+
 
 	}
 

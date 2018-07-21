@@ -5,10 +5,16 @@ public class Peca extends EstruturaMovel {
 	//toda peça deve ser [5][5], tendo um bloco em [2][2], sendo este o pivot.
 	public Peca(Bloco[][] bloco){
 		super(30/2 - 2, 10 - 3, bloco);
+		//Super deverá chamar com Largura/2-2 e Altura-3, sendo Largura e Altura atributos da Estrutura Fixa
+		//Não é necessário chamar da própria estrutura fixa pois esse tamanho será definido ainda no desenvolvimento e não será modificado.
+	}
+	
+	public Peca(){
+		super(30/2 - 2, 10 - 3, null);
 	}
 
 	//Métodos temporários, serão implementados numa interface para cumprir os requerimentos (ou simplesmente serão métodos da Sub Classe Estrutura Móvel)
-	public void andaX(int x, EstruturaFixa fixa) {
+	public void andaX(int x, EstruturaFixa fixa){
 		// Move
 		super.setPosX(getPosX() + x);
 		// Se há superposição (peça entrou "dentro" da fixa) 
@@ -49,7 +55,7 @@ public class Peca extends EstruturaMovel {
 	}
 
 	@Override
-	public void andaY(int y, EstruturaFixa fixa) {
+	public void andaY(int y, EstruturaFixa fixa){
 		if (fixa.existeBlocoAbaixo(this)){
 			fixa.addBlocos(this);
 		} 		

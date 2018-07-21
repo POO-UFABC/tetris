@@ -11,7 +11,6 @@ public abstract class Estrutura {
 		return this.blocos;
 	}
 
-	//Função para aumentar a coesão
 	public boolean existeBloco(int x, int y){
 		try{
 			return (this.getBlocos()[x][y] != null);
