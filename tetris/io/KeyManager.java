@@ -6,6 +6,11 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener{
 
   private boolean down, left, right, zero;
+  
+  private boolean justPressedLeft  = false;
+  private boolean justPressedRight = false;
+  private boolean justPressedDown  = false;
+  private boolean justPressedZero  = false;
 
   public KeyManager() {
     //teclas consideradas
@@ -48,19 +53,47 @@ public class KeyManager implements KeyListener{
 	//GETTERS & SETTERS
 	
 	public boolean getDown() {
-	  return this.down;
+	  if (this.down && !this.justPressedDown) {
+	    this.justPressedDown = true;
+	    return true;
+	  }
+	  if (!this.down) {
+	    this.justPressedDown = false;
+	  }
+	  return false;
 	}
-	
+
 	public boolean getLeft() {
-	  return this.left;
+	  if (this.left && !this.justPressedLeft) {
+	    this.justPressedLeft = true;
+	    return true;
+	  }
+	  if (!this.left) {
+	    this.justPressedLeft = false;
+	  }
+	  return false;
 	}
 	
 	public boolean getRight() {
-	  return this.right;
+	  if (this.right && !this.justPressedRight) {
+	    this.justPressedRight = true;
+	    return true;
+	  }
+	  if (!this.right) {
+	    this.justPressedRight = false;
+	  }
+	  return false;
 	}
 	
 	public boolean getZero() {
-	  return this.zero;
+	  if (this.zero && !this.justPressedZero) {
+	    this.justPressedZero = true;
+	    return true;
+	  }
+	  if (!this.zero) {
+	    this.justPressedZero = false;
+	  }
+	  return false;
 	}
 
 }

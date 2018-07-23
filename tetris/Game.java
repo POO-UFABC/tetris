@@ -5,9 +5,9 @@ import java.awt.image.BufferStrategy;
 import io.Display;
 import io.KeyManager;
 
-import gameStates.State;
-import gameStates.MenuState;
-import gameStates.GameState;
+import gamestates.State;
+import gamestates.MenuState;
+import gamestates.GameState;
 
 /* O método game estende Runnable porque o jogo deverá ser executado numa thread
  * Esta classe é responsável por:
@@ -49,8 +49,8 @@ public class Game implements Runnable {
 	
 	
 	private void init() {
-	  width = 500;
-	  height = 700;
+		width = 500;
+		height = 700;
 		display = new Display(title, width, height);//Título, altura, largura da janela
 		display.getFrame().addKeyListener(keyManager);
 			
@@ -62,7 +62,7 @@ public class Game implements Runnable {
 	}
 	
 	private void update() {		
-	  State.getState().update();
+		State.getState().update();
 	}
 	
 	private void render() {
@@ -124,7 +124,6 @@ public class Game implements Runnable {
 			}
 			
 			if(timer >= 1000000000) {
-				//System.out.println("Ticks and Frames: " + ticks);
 				ticks = 0;
 				timer = 0;
 			}
