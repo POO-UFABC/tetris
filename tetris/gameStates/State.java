@@ -6,34 +6,34 @@ import io.KeyManager;
 
 public abstract class State {
 
-	private static State currentState = null;
+	private static State CURRENT_STATE = null;
 	
-	private static KeyManager keyManager = null;
+	private static KeyManager KEY_MANAGER = null;
 	
-	private static int gameMode = 0;
+	private static int GAME_MODE = 0;
 	
 	public static void setState(State state) {
-		currentState = state;
+		CURRENT_STATE = state;
 	}
 	
 	public static void setKeyManager(KeyManager keyManager) {
-	  State.keyManager = keyManager;
+	  State.KEY_MANAGER = keyManager;
 	}
 	
 	public static State getState() {
-		return currentState;
+		return CURRENT_STATE;
 	}
 	
 	public static KeyManager getKeyManager() {
-	  return keyManager;
+	  return KEY_MANAGER;
 	}
 	
 	public static int getGameMode() {
-	  return gameMode;
+	  return GAME_MODE;
 	}
 	
 	public static void setGameMode(int gameMode) {
-	  Static.gameMode = gameMode;
+	  Static.GAME_MODE = gameMode;
 	}
 	
 	public abstract void update();
