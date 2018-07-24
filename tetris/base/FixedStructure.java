@@ -1,7 +1,6 @@
 package base;
 
 import java.awt.Graphics;
-import java.awt.Color;
 
 public class FixedStructure extends Structure {
 	private static int DEFAULT_WIDTH = 10;
@@ -15,7 +14,7 @@ public class FixedStructure extends Structure {
 		//Cria a matriz de blocos
 		this.width = width;
 		this.height = height;
-		Block[][] blocks = new Block[width][height+3];
+		Block[][] blocks = new Block[width][height];
 		
 		//Preenche o "chão"
 		for(int x = 0; x < width; x++){
@@ -27,12 +26,6 @@ public class FixedStructure extends Structure {
       		blocks[0][y] = new Block();
       		blocks[this.width - 1][y] = new Block();
     	}
-		//Parede invisivel, evita que os blocos passem do limite
-		for(int y = height; y < height+3; y++){
-      		blocks[0][y] = new Block(Color.black);
-      		blocks[this.width - 1][y] = new Block(Color.black);
-    	}
-
 		super.setBlocks(blocks);
 		super.setPosX(posX);
 		super.setPosY(posY);
@@ -45,9 +38,15 @@ public class FixedStructure extends Structure {
 	//Copia blocos de uma estrutura móvel para a estrutura fixa
 	public void addBlocks(MobileStructure mobileStructure){
 		Block[][] blocks = mobileStructure.getBlocks();
-		for(int x = 1; x < this.getWidth() - 1; x++)
-			this.setBlock(x, mobileStructure.getPosY(), blocks[x-1][0]);
-		mobileStructure.setBlocks(null);			
+		for(int x = 0; x < blocks.length; x++){
+			for(int y = 1; y < blocks[0].length; y++){
+				this.setBlock(x + mobileStructure.getPosX(), y + mobileStructure.getPosY(), blocks[x][y]);
+			}
+		}
+		
+		mobileStructure.setBlocks(null);	
+		
+		lineIsCompleteProcedure();
 		//if (topLine > 0)
 	}
 
@@ -56,14 +55,23 @@ public class FixedStructure extends Structure {
 		Block[][] blocks = mobileStructure.getBlocks();
 
 		//Copiar os blocos da peça
-		int topLine = 0;
-		int bottomLine = this.getHeight();
 		for(int i = 0; i < 5; i++){
 			for(int j = 0; j < 5; j++) {
 				this.setBlock(i + mobileStructure.getPosX(), j + mobileStructure.getPosY(), blocks[i][j]);
 			}
 		}
 		
+		//Apagar os blocos da estrutura móvel
+		mobileStructure.setBlocks(null);	
+
+		lineIsCompleteProcedure();
+
+	}
+
+	private void lineIsCompleteProcedure(){
+		int topLine = 0;
+		int bottomLine = this.getHeight();
+	
 		//Checando se completou uma linha
 		for(int y = 1; y < this.getHeight(); y++){
 			if(lineIsComplete(y)) {
@@ -72,46 +80,58 @@ public class FixedStructure extends Structure {
 				cleanLine(y);
 			}
 		}
-
-		//Apagar os blocos da estrutura móvel
-		mobileStructure.setBlocks(null);	
-
 		//Se alguma linha foi apagada, topLine > 0
 		if (topLine > 0) {
 			//Todas as partes acima da linha apagada passam a ser móveis
-			MobileStructure tempMobile;
-			for (int y = bottomLine + 1; y < this.getHeight(); y++){
-				//Vamos até bottomLine + 5 pois a peça mais alta tem 4 Blocks
-				if(y < this.getHeight()){
-					//Temos de verificar se não estamos verificando alto de mais
-					tempMobile = new MobileStructure(1, y, swapBlocks(y));
-					//swapBlock (ver código abaixo) devolve os Blocks naquela linha, e tira estes Blocks do null
-					//basicamente trocamos (dai o swap) os Blocks de Structure
-					while(tempMobile.getBlocks() != null){
-						//Andamos o quanto dá
-						tempMobile.moveY(1, this);
+			MobileStructure[] tempMobile = new MobileStructure[20];
+			int tMobileIndex = 0;
+			for(int y = bottomLine+1;y<this.getHeight();y++){
+				for(int x = 1; x< this.getWidth()-1;x++){
+									
+					//Existe um bloco no ponto, não existe
+					if(this.blockExists(x,y)){
+						tempMobile[tMobileIndex] = new MobileStructure(0,0,floodFill(x,y));
+						tMobileIndex += 1;
 					}
 				}
-				//Chegado aqui, o trabalho desta linha está completo
+			}
+			for (int i = 0; i < tMobileIndex; i++){
+				while(tempMobile[i].getBlocks() != null){
+					tempMobile[i].moveY(1,this);					
+				}					
 			}
 		}
 	}
 
-	private Block[][] swapBlocks(int linha){
-		boolean hadBlock = false;
-		Block[][] swappedBlock = new Block[this.getWidth()-2][1];
-		for(int x = 1; x < this.getWidth() - 1; x++){
-			//Da o Block para o Block trocado
-			swappedBlock[x-1][0] = this.getBlocks()[x][linha];
-			hadBlock = this.blockExists(x, linha) || hadBlock;
-			//Tira o Block do fixo
-			this.getBlocks()[x][linha] = null;
-		}
-		if(hadBlock)
-			return swappedBlock;
-		//Esse passo acelera o moveY.
-		return null;
+	private Block[][] floodFill(int x, int y) {
+		//Cabe qualquer coisa
+		int tempWidth = this.getWidth();
+		int tempHeight = this.getHeight();
+		
+		Block[][] tempBlock = new Block[tempWidth][tempHeight];
+		tempBlock[x][y] = this.getBlocks()[x][y];
+		this.getBlocks()[x][y] = null;
+		if (this.blockExists(x+1, y) && x != this.getWidth()-2)
+			tempBlock = floodFillNext(tempBlock,x+1,y,x+1,y);
+		if (this.blockExists(x, y+1) && y != this.getHeight()-1)	
+			tempBlock = floodFillNext(tempBlock,x,y+1,x,y+1);
+		return tempBlock;
 	}
+	private Block[][] floodFillNext(Block[][] tempBlock, int x, int y, int xIndex, int yIndex){
+		tempBlock[xIndex][yIndex] = this.getBlocks()[x][y];
+		super.getBlocks()[x][y] = null;
+		if(this.blockExists(x+1, y) && x != this.getWidth() - 2)
+			tempBlock = floodFillNext(tempBlock,x+1,y,xIndex+1,yIndex);
+		if(this.blockExists(x-1, y) && x > 1)
+			tempBlock = floodFillNext(tempBlock,x-1,y,xIndex-1,yIndex);
+		if(this.blockExists(x, y+1) && y != this.getHeight()-1)
+			tempBlock = floodFillNext(tempBlock,x,y+1,xIndex,yIndex+1);
+		if(this.blockExists(x, y-1) && y > 1)
+			tempBlock = floodFillNext(tempBlock,x,y-1,xIndex,yIndex-1);
+		return tempBlock;
+	}
+
+	
 
 	private void cleanLine(int linha){
 		for (int x = 1; x < this.getWidth() - 1; x++){
@@ -141,8 +161,14 @@ public class FixedStructure extends Structure {
 		int posX = mobileStructure.getPosX();
 		int posY = mobileStructure.getPosY();
 		//Por enquanto está iterando todos os Blocks de móvel (que provavelmente serão, no máximo, 25 Blocks). Talvez haja solução melhor
-		for(int x = 1; x < this.getWidth()-2; x++)
-			if (mobileStructure.blockExists(x, 0) && this.blockExists(x+1, posY-1)) return true;
+		for(int x = 1; x < this.getWidth()-1; x++){
+			for(int y = 1; y < this.getWidth()-1; y++){
+				if (mobileStructure.blockExists(x, y) && this.blockExists(x, y+posY-1)) {
+					return true;
+				}
+			}
+		}
+			
 		//Se em nenhum momento havia um Block na móvel, com um Block diretamente abaixo na fixa, ele retornará falso.
 		return false;
     }
