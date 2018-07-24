@@ -4,9 +4,10 @@ import java.awt.Graphics;
 
 public class PlayableStructure extends MobileStructure {
 	//toda peça deve ser [5][5], tendo um Block em [2][2], sendo este o pivot.
-	public static final int size = 5;
+	public static final int SIZE = 5;
+	
 	public PlayableStructure(Block[][] components){
-		super(size, size, components);
+		super(SIZE, SIZE, components);
 		//Super deverá chamar com Largura/2-2 e Altura-3, sendo Largura e Altura atributos da Structure Fixa
 		//Não é necessário chamar da própria Structure fixa pois esse tamanho será definido ainda no desenvolvimento e não será modificado.
 	}
@@ -28,8 +29,8 @@ public class PlayableStructure extends MobileStructure {
 
 	private boolean gameOver(FixedStructure fixedStructure) {
 		Block[][] newBlocks = this.getBlocks();
-		for (int i = 0; i < size; i++){
-			for (int j = 0; j < size; j++){
+		for (int i = 0; i < SIZE; i++){
+			for (int j = 0; j < SIZE; j++){
 				if ((newBlocks[i][j] != null) && (j+this.getPosY() >= fixedStructure.getHeight())){
 					return true;
 				}
@@ -53,8 +54,8 @@ public class PlayableStructure extends MobileStructure {
 	public void rotate(FixedStructure fixedStructure){
 		Block[][] tempBlock = new Block[5][5];
 		Block[][] localBlocks = super.getBlocks();
-		for(int x = 0; x < size; x++)
-			for(int y = 0; y < size; y++)
+		for(int x = 0; x < SIZE; x++)
+			for(int y = 0; y < SIZE; y++)
 				tempBlock[y][4-x] = localBlocks[x][y];
 		//Antes de setarmos a peça rotacionada como verdadeira, devemos verificar se há algum choque entre a Structure fixa e a peca
 		//É um método parecido com o método de verificar se há algum Block abaixo, porém este verificará se há Blocks exatamente onde os Blocks da nova peça estão.
@@ -70,8 +71,8 @@ public class PlayableStructure extends MobileStructure {
 	private boolean existsSuperposition(FixedStructure fixedStructure, Block[][] tempBlock){
 		int posX = this.getPosX();
 		int posY = this.getPosY();
-		for(int i = 0; i < size; i++)
-			for(int j = 0; j < size; j++){
+		for(int i = 0; i < SIZE; i++)
+			for(int j = 0; j < SIZE; j++){
 				if(fixedStructure.blockExists(posX + i, posY + j)){
 					if(tempBlock[i][j] != null){
 						return true;
@@ -84,8 +85,8 @@ public class PlayableStructure extends MobileStructure {
 	public void render(int displayHeight, Graphics g) {
 		if (this.getBlocks() == null)
 			return;
-		for (int x = 0; x < this.size; x++) {
-			for (int y = 0; y < this.size; y++) {
+		for (int x = 0; x < this.SIZE; x++) {
+			for (int y = 0; y < this.SIZE; y++) {
 				Block b = this.getBlocks()[x][y];
 				if (b != null){
 					int px = this.getPosX()*b.side + x * b.side;
