@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class Block {
-	public static final int side = 20;
+	public static final int SIDE = 20; // De acordo com o padrão da Google, variaveis estáticas são nomeadas com letra maiúscula.
 	private Color color;
 	public Block() {
 		//Por enquanto, está chamando, de padrão, a color branca
@@ -23,7 +23,7 @@ public class Block {
 
 	public void render(int x, int y, Graphics g) {
 		g.setColor(this.color);
-		g.fillRect(x, y, side, side);
+		g.fillRect(x, y, SIDE, SIDE);
 	}
 
 	public Color getColor(){
