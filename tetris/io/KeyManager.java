@@ -15,14 +15,16 @@ public class KeyManager implements KeyListener{
   private boolean justPressedZero  = false;
   
   private double last; 
-  private double interval = Time.timePerTick*20; 
+  private double interval; 
 
   public KeyManager() {
     //teclas consideradas
 	  this.down  = false;
 	  this.left  = false;
 	  this.right = false;
-	  this.zero  = false;
+		this.zero  = false;
+		this.interval = Time.timePerTick*20;
+		this.last  = this.interval;
 	}
 	
 	//Método para setar os valores de cada comando em verdadeiro ou falso
@@ -39,7 +41,7 @@ public class KeyManager implements KeyListener{
 		if (event.getKeyCode() == KeyEvent.VK_NUMPAD0) {
 		  this.zero = state;
 		}
-		last = Time.now;
+		this.last = Time.now;
 	}
 	
 	@Override

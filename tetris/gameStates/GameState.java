@@ -35,6 +35,7 @@ public class GameState extends State{
 		this.timerThread.start();
 	}
 	
+	@Override
 	public void update() {
 		if (!this.gameOver){
 			boolean[] keys = this.updateKeys();
@@ -98,6 +99,7 @@ public class GameState extends State{
 		return false;
 	}*/
 
+	@Override
 	public void render(Graphics g) {
 		this.playableStructure.render(700, g);
 		this.fixedStructure.render(700, g);

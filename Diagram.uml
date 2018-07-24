@@ -1,104 +1,317 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-package "Tetris"{
-  class Game  
+Package base{
+  class Block
+  class FixedStructure
+  class MobileStructure
+  class PlayableStructure
+  class PlayableStructureInvL
+  class PlayableStructureInvZ
+  class PlayableStructureL
+  class PlayableStructureLine
+  class PlayableStructureSquare
+  class PlayableStructureT
+  class PlayableStructureZ
+  class Randomizer
+  class Structure
+  class Timer
 }
 
-package "io"{
-  class KeyManager
-  class Display
+Structure	*-right- Block
+Structure	<|-left- FixedStructure
+Structure <|-- MobileStructure
+MobileStructure <|-- PlayableStructure
+PlayableStructure <|-left- PlayableStructureInvL
+PlayableStructure <|-- PlayableStructureL
+PlayableStructure <|-- PlayableStructureInvZ
+PlayableStructure <|-right- PlayableStructureZ
+PlayableStructure <|-- PlayableStructureLine
+PlayableStructure <|-- PlayableStructureT
+PlayableStructure <|-- PlayableStructureSquare
+Runnable <|.down. Timer
+
+class Runnable<<Java Interface>>{ 
+
 }
 
-package "GameStates"{
-  class State
+Package gamestates{
   class GameState
   class MenuState
+  class State
 }
 
-State o-- GameState
-State o-- MenuState
+State <|-- GameState
+State <|-- MenuState
+GameState *-- Timer
+GameState *-up- FixedStructure
+GameState *-left- PlayableStructure
+GameState *-up- Randomizer
 
-class Game {
-  -display: Display
-  -width: int
-  -height: int
-  +title: String
-  -running: boolean = false
-  -thread: Thread
-  -bs: BufferStrategy
-  -g: Graphics
-  +gameState: State
-  +menuState: State
-  -keyManager: KeyManager
+Package io{
+  class Display
+  class KeyManager
+}
+
+ KeyListener <|.. KeyManager
+
+Package time{
+  class Time
+}
+
+KeyManager o-- Time
+
+class Block{
+  <<final>>{static}+side:int
+  -color:Color
   __
-  +Game(title: String)
-  -init()
-  -update()
-  -render()
-  +start()
-  +run()
-  +stop()
-  +getKeyManager(): KeyManager
-  +getWidth(): int
-  +getHeight(): int
-  +getDisplay(): Display
+  ..Constructor..
+  +Block
+  +Block(color:Color)
+  ..Getter & Setter..
+  +setColor(color:Color)
+  +getColor():Color
+  ..
+  +render(x:int, y:int, g:Graphics)
 }
 
-class KeyManager {
+class FixedStructure{
+  {static}-DEFAULT_WIDTH:int
+  {static}-DEFAULT_HEIGHT:int
+  -width:int
+  -height:int
+  __
+  ..Constructor..
+  +FixedStructure()
+  +FixedStructure(posX:int, posY:int, width:int, height:int)
+  ..Override..
+  +blockExists(x:int, y:int):boolean
+  ..Getter & Setter..
+  +setBlock(x:int, y:int, block:Block)
+  +getWidth():int
+  +getHeight():int
+  +setWidth(width:int)
+  +setHeight(height:int)
+  ..
+  +addBlocks(mobileStructure:MobileStructure)
+  +addBlocks(mobileStructure:PlayableStructure)
+  +swapBlocks(linha:int):Clock[][]
+  +cleanLine(linha:int)
+  +blockExistsDown(mobileStructure:PlayableStructure):boolean
+  +blockExistsDown(mobileStructure:MobileStructure):boolean
+  +lineIsComplete(linha:int):boolean
+  +render(displayHeight:int, g:Graphics)
+}
+
+class MobileStructure{
+  __
+  ..Constructor..
+  +MobileStructure(posX:int, posY:int, blocks:Block[][])
+  ..
+  +moveY(y:int, fixedStructure:FixedStructure):boolean
+}
+
+class PlayableStructure{
+  <<final>>{static}+size:int
+  __
+  ..Constructor..
+  +PlayableStructure(components:Block[][])
+  +PlayableStructure(x:int, y:int)
+  ..Override..
+  +moveY(deltaY:int, fixedStructure:FixedStructure):boolean
+  ..
+  +moveX(deltaX:int, fixedStructure:FixedStructure)
+  +rotate(fixedStructure:FixedStructure)
+  -gameOver(fixedStructure:FixedStructure):boolean
+  -existsSuperposition(fixedStructure:FixedStructure, playableStructure:PlayableStructure)
+  -existsSuperposition(fixedStructure:FixedStructure, tempBlock:Block[][])
+  +render(displayHeight:int, g:Graphics)
+}
+
+class PlayableStructureInvL{
+  <<final>>{static}-color:Color
+  __
+  ..Constructor..
+  +PlayableStructureInvL(x:int,y:int)
+}
+
+class PlayableStructureInvZ{
+  <<final>>{static}-color:Color
+  __
+  ..Constructor..
+  +PlayableStructureInvZ(x:int,y:int)
+}
+
+class PlayableStructureL{
+  <<final>>{static}-color:Color
+  __
+  ..Constructor..
+  +PlayableStructureL(x:int,y:int)
+}
+
+class PlayableStructureLine{
+  <<final>>{static}-color:Color
+  __
+  ..Constructor..
+  +PlayableStructureLine(x:int,y:int)
+}
+
+class PlayableStructureSquare{
+  <<final>>{static}-color:Color
+  __
+  ..Constructor..
+  +PlayableStructureSquare(x:int,y:int)
+  ..Override..
+  +rotate(fixedStructure:FixedStructure)
+}
+
+class PlayableStructureT{
+  <<final>>{static}-color:Color
+  __
+  ..Constructor..
+  +PlayableStructureT(x:int,y:int)
+}
+
+class PlayableStructureZ{
+  <<final>>{static}-color:Color
+  __
+  ..Constructor..
+  +PlayableStructureZ(x:int,y:int)
+}
+
+class Randomizer{
+  __
+  +getRandomPiece(posX:int, posY:int):PlayableStructure
+}
+
+class Structure{
+  -blocks[][]:blocks
+  -posX:int
+  -posY:int
+  __
+  ..Getter & Setter..
+  +setBlocks(blocks[][]:Block)
+  +setPosX(posX:int)
+  +setPosY(posY:int)
+  +getBlocks():Block[][]
+  +getPosX():int
+  +getPosY():int
+  ..
+  +blockExists(x:int, y:int):boolean
+}
+
+class Timer{
+  -triggered:boolean
+  -deltaT:int
+  __
+  ..Constructor..
+  +Timer(deltaT:int)
+  ..Override..
+  +run()
+  ..
+  +isTriggered():boolean
+  +reset()
+}
+
+class GameState{
+  -fixedStructure:FixedStructure
+  -playableStructure:PlayableStructure
+  <<final>>-initialPosX:int
+  <<final>>-initialPosY:int
+  <<final>>-borderSizeX:int
+  <<final>>-borderSizeY:int
+  -timerThread:Thread
+  -timer:Timer
+  -randomizer:Randomizer
+  __
+  ..Constructor..
+  +GameState()
+  ..Override..
+  +update()
+  +render(g:Graphics)
+  ..
+  +updateKeys():boolean[]
+
+}
+
+class MenuState{
+  __
+  -incrementGameMode(increment:int)
+  ..Override..
+  +update()
+  +render(g:Graphics)
+}
+
+class State{
+  {static}-currentState
+  {static}-keyManager
+  {static}-gameMode
+  __
+  ..Getter & Setter..
+  {static}+setState(state:State)
+  {static}+getState():State
+  {static}+setKeyManager(keyManager:KeyManager)
+  {static}+getKeyManager():KeyManager
+  {static}+setGameMode(gameMode:int)
+  {static}+getGameMode():int
+  ..Abstract..
+  //+update()//
+  //+render(g:Graphics)//
+}
+
+class KeyManager{
   -down:boolean
   -left:boolean
   -right:boolean
   -zero:boolean
+  -justPressedLeft:boolean
+  -justPressedRight:boolean
+  -justPressedDown:boolean
+  -justPressedZero:boolean
+  -last:double
+  -interval:double
   __
-  +setKey(KeyEvent, boolean)
-  +keyPressed(KeyEvent)
-  +keyReleased(KeyEvent)
-  +keyTyped(KeyEvent)
+  ..Constructor..
+  +KeyManager()
+  ..Override..
+  +keyPressed(event:KeyEvent)
+  +keyReleased(event:KeyEvent)
+  +keyTyped(event:KeyEvent)
+  ..Getter & Setter..
+  -setKey(event:KeyEvent, state:boolean)
   +getDown():boolean
   +getLeft():boolean
   +getRight():boolean
   +getZero():boolean
 }
 
-class Display {
+class Display{
   -frame:JFrame
-  -canvas:Canvas
+  -canvas:canvas
   -title:String
   -width:int
   -height:int
   __
-  +Display(String, int, int)
-  -createDisplay()
+  ..Constructor..
+  +Display(title:String, width:int, height:int)
+  ..Getter..
   +getCanvas():Canvas
   +getFrame():JFrame
   +getWidth():int
   +getHeight():int
+  ..
+  -createDisplay()
 }
 
-class State{
-  -currentState:State = null
-  -keyManager:KeyManager=null
+class Time{
+  {static}+fps:int
+  {static}+timePerTick:double
+  {static}+delta:double
+  {static}+now:long
+  {static}+lastTime:long
+  {static}+timer:long
+  {static}+ticks:int
   __
-  +setState(State)
-  +setKeyManager(KeyManager)
-  +getState():State
-  +getKeyManager():KeyManager
-  +update()
-  +render(Graphics)
-}
-
-class GameState{
-  __
-  +update()
-  +render(Graphics)
-
-}
-
-class MenuState{
-  __
-  +update()
-  +render(Graphics)
 }
 
 @enduml

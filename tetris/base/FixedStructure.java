@@ -119,8 +119,8 @@ public class FixedStructure extends Structure {
 		}
 	}
 
-	public void setBlock(int x, int y, Block Block){
-		if (Block != null) super.getBlocks()[x][y] = Block;
+	public void setBlock(int x, int y, Block block){
+		if (block != null) super.getBlocks()[x][y] = block;
 	}
 
 	// Estaremos sempre passando as coisas para a Structure fixa. 

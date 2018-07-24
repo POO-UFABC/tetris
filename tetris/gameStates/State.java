@@ -16,8 +16,8 @@ public abstract class State {
 		currentState = state;
 	}
 	
-	public static void setKeyManager(KeyManager manager) {
-	  keyManager = manager;
+	public static void setKeyManager(KeyManager keyManager) {
+	  State.keyManager = keyManager;
 	}
 	
 	public static State getState() {
@@ -32,8 +32,8 @@ public abstract class State {
 	  return gameMode;
 	}
 	
-	public static void setGameMode(int n) {
-	  gameMode = n;
+	public static void setGameMode(int gameMode) {
+	  Static.gameMode = gameMode;
 	}
 	
 	public abstract void update();

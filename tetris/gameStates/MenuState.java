@@ -8,9 +8,8 @@ import io.KeyManager;
 import gamestates.GameState;
 
 public class MenuState extends State{ 
-  private boolean justPressedRight = false;
-  //private boolean justPressedLeft = false;
 
+	@Override
 	public void update() {
 	  //Zero escolhe a dificuldade selecionada e muda o estado
 	  if (State.getKeyManager().getZero()) {
@@ -38,6 +37,7 @@ public class MenuState extends State{
 		}
 	}
 
+	@Override
 	public void render(Graphics g) {	  
 		g.setColor(Color.white);
 		g.drawString("=TETRIS=", 210, 200);
