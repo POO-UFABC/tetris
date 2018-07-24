@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class Block {
-	public static final int side = 20;
+	public static final int SIDE = 20;
 	private Color color;
 	
 	/**Por enquanto, está chamando, de padrão, a color branca
