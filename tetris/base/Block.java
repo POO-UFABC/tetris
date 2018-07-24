@@ -6,10 +6,12 @@ import java.awt.Color;
 public class Block {
 	public static final int side = 20;
 	private Color color;
+	
+	/**Por enquanto, está chamando, de padrão, a color branca
+	*Está é a minha ideia para as bordas, poderá ser mudado à frente
+	*Em geral, o Block serve mais para ser diferente de um ponteiro para null que por ser um holder de atributos
+	*/
 	public Block() {
-		//Por enquanto, está chamando, de padrão, a color branca
-		//Está é a minha ideia para as bordas, poderá ser mudado à frente
-		//Em geral, o Block serve mais para ser diferente de um ponteiro para null que por ser um holder de atributos
 		this(Color.white);
 	}
 

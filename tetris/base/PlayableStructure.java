@@ -3,20 +3,25 @@ package base;
 import java.awt.Graphics;
 
 public class PlayableStructure extends MobileStructure {
-	//toda peça deve ser [5][5], tendo um Block em [2][2], sendo este o pivot.
+	/**
+	* toda peça devem ser [5][5], sendo Block [2][2] o pivot.
+	*/
 	public static final int size = 5;
+	
+	/**
+	*Super deverá chamar com Largura/2-2 e Altura-3, sendo Largura e Altura atributos da Structure Fixa.
+	*Não é necessário chamar da própria Structure fixa pois esse tamanho será definido ainda no desenvolvimento e não será modificado.
+	*/
 	public PlayableStructure(Block[][] components){
 		super(size, size, components);
-		//Super deverá chamar com Largura/2-2 e Altura-3, sendo Largura e Altura atributos da Structure Fixa
-		//Não é necessário chamar da própria Structure fixa pois esse tamanho será definido ainda no desenvolvimento e não será modificado.
 	}
 	
-	//Método chamado quando a estrutura móvel é gerada aleatóriamente
+	/**Método chamado quando a estrutura móvel é gerada aleatóriamente */
 	public PlayableStructure(int x, int y){
 		super(x, y, null);
 	}
 
-	//Métodos temporários, serão implementados numa interface para cumprir os requerimentos
+	/**Métodos temporários, serão implementados numa interface para cumprir os requerimentos */
 	public void moveX(int deltaX, FixedStructure fixedStructure){
 		// Move
 		super.setPosX(getPosX() + deltaX);
@@ -26,6 +31,7 @@ public class PlayableStructure extends MobileStructure {
 			super.setPosX(getPosX() - deltaX);
 	}
 
+	
 	private boolean gameOver(FixedStructure fixedStructure) {
 		Block[][] newBlocks = this.getBlocks();
 		for (int i = 0; i < size; i++){
@@ -49,7 +55,7 @@ public class PlayableStructure extends MobileStructure {
 		return false;
 	}
 	
-	//Qualquer rotação (ao tomarmos um pivot posicionado em (2,2)) é facilmente representada como (y, 4-x)
+	/**Qualquer rotação (ao tomarmos um pivot posicionado em (2,2)) é facilmente representada como (y, 4-x) */
 	public void rotate(FixedStructure fixedStructure){
 		Block[][] tempBlock = new Block[5][5];
 		Block[][] localBlocks = super.getBlocks();

@@ -9,6 +9,7 @@ public class Randomizer{
         Random r = new Random ();
         PlayableStructure s;
         int val = r.nextInt(7);
+        System.out.println(val);
         switch (val){
             case 0:
                 s = new PlayableStructureInvL(posX, posY);

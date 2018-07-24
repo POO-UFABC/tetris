@@ -3,6 +3,8 @@ package io;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import time.*;
+
 public class KeyManager implements KeyListener{
 
   private boolean down, left, right, zero;
@@ -11,6 +13,9 @@ public class KeyManager implements KeyListener{
   private boolean justPressedRight = false;
   private boolean justPressedDown  = false;
   private boolean justPressedZero  = false;
+  
+  private double last; 
+  private double interval = Time.timePerTick*20; 
 
   public KeyManager() {
     //teclas consideradas
@@ -34,6 +39,7 @@ public class KeyManager implements KeyListener{
 		if (event.getKeyCode() == KeyEvent.VK_NUMPAD0) {
 		  this.zero = state;
 		}
+		last = Time.now;
 	}
 	
 	@Override
@@ -41,12 +47,12 @@ public class KeyManager implements KeyListener{
 		this.setKey(event, true);
 	}
 
-  @Override
+	@Override
 	public void keyReleased(KeyEvent event) {
 	  this.setKey(event, false);
 	}
 
-  @Override
+	@Override
 	public void keyTyped(KeyEvent event) {
 	}
 	
@@ -60,7 +66,9 @@ public class KeyManager implements KeyListener{
 	  if (!this.down) {
 	    this.justPressedDown = false;
 	  }
-	  return false;
+	  /*return false;*/
+	  if((Time.now-last)>=interval) return this.down;
+	  else return false;
 	}
 
 	public boolean getLeft() {
@@ -71,7 +79,9 @@ public class KeyManager implements KeyListener{
 	  if (!this.left) {
 	    this.justPressedLeft = false;
 	  }
-	  return false;
+	  /*return false;*/
+	  if((Time.now-last)>=interval) return this.left;
+	  else return false;
 	}
 	
 	public boolean getRight() {
@@ -82,7 +92,11 @@ public class KeyManager implements KeyListener{
 	  if (!this.right) {
 	    this.justPressedRight = false;
 	  }
-	  return false;
+	  /*return false;*/
+	  if((Time.now-last)>=interval) 
+		return this.right;
+	  else 
+		return false;
 	}
 	
 	public boolean getZero() {

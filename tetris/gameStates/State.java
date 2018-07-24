@@ -1,4 +1,4 @@
-package gameStates;
+package gamestates;
 
 import java.awt.Graphics;
 
@@ -9,6 +9,8 @@ public abstract class State {
 	private static State currentState = null;
 	
 	private static KeyManager keyManager = null;
+	
+	private static int gameMode = 0;
 	
 	public static void setState(State state) {
 		currentState = state;
@@ -24,6 +26,14 @@ public abstract class State {
 	
 	public static KeyManager getKeyManager() {
 	  return keyManager;
+	}
+	
+	public static int getGameMode() {
+	  return gameMode;
+	}
+	
+	public static void setGameMode(int n) {
+	  gameMode = n;
 	}
 	
 	public abstract void update();

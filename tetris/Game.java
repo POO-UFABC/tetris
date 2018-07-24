@@ -9,6 +9,8 @@ import gamestates.State;
 import gamestates.MenuState;
 import gamestates.GameState;
 
+import time.*;
+
 /* O método game estende Runnable porque o jogo deverá ser executado numa thread
  * Esta classe é responsável por:
  *   *Iniciar a thread (método start)
@@ -102,30 +104,22 @@ public class Game implements Runnable {
 		
 		init();
 		
-		int fps = 60;
-		double timePerTick = 1000000000 / fps;
-		double delta = 0;
-		long now;
-		long lastTime = System.nanoTime();
-		long timer = 0;
-		int ticks = 0;
-		
 		while(running) {
-			now = System.nanoTime();
-			delta += (now - lastTime) / timePerTick;
-			timer += now - lastTime;
-			lastTime = now;
+			Time.now = System.nanoTime();
+			Time.delta += (Time.now - Time.lastTime) / Time.timePerTick;
+			Time.timer += Time.now - Time.lastTime;
+			Time.lastTime = Time.now;
 			
-			if(delta >= 1) {
+			if(Time.delta >= 1) {
 				update();
 				render();
-				ticks++;
-				delta--;
+				Time.ticks++;
+				Time.delta--;
 			}
 			
-			if(timer >= 1000000000) {
-				ticks = 0;
-				timer = 0;
+			if(Time.timer >= 1000000000) {
+				Time.ticks = 0;
+				Time.timer = 0;
 			}
 		}
 		

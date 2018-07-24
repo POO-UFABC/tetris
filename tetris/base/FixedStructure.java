@@ -1,6 +1,7 @@
 package base;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class FixedStructure extends Structure {
 	private static int DEFAULT_WIDTH = 10;
@@ -14,7 +15,7 @@ public class FixedStructure extends Structure {
 		//Cria a matriz de blocos
 		this.width = width;
 		this.height = height;
-		Block[][] blocks = new Block[width][height];
+		Block[][] blocks = new Block[width][height+3];
 		
 		//Preenche o "chão"
 		for(int x = 0; x < width; x++){
@@ -26,6 +27,12 @@ public class FixedStructure extends Structure {
       		blocks[0][y] = new Block();
       		blocks[this.width - 1][y] = new Block();
     	}
+		//Parede invisivel, evita que os blocos passem do limite
+		for(int y = height; y < height+3; y++){
+      		blocks[0][y] = new Block(Color.black);
+      		blocks[this.width - 1][y] = new Block(Color.black);
+    	}
+
 		super.setBlocks(blocks);
 		super.setPosX(posX);
 		super.setPosY(posY);
