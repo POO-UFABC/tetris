@@ -25,7 +25,7 @@ public class Block {
 
 	public void render(int x, int y, Graphics g) {
 		g.setColor(this.color);
-		g.fillRect(x, y, side, side);
+		g.fillRect(x, y, SIDE, SIDE);
 	}
 
 	public Color getColor(){
