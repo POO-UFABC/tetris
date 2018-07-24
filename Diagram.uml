@@ -31,7 +31,7 @@ PlayableStructure <|-- PlayableStructureT
 PlayableStructure <|-- PlayableStructureSquare
 Runnable <|.down. Timer
 
-class Runnable<<Java Interface>>{ 
+interface Runnable<<Interface>>{ 
 
 }
 
@@ -52,6 +52,8 @@ Package io{
   class Display
   class KeyManager
 }
+
+interface KeyListener<<Interface>>{}
 
  KeyListener <|.. KeyManager
 
@@ -242,7 +244,7 @@ class MenuState{
   +render(g:Graphics)
 }
 
-class State{
+abstract class State<<Abstract>>{
   {static}-currentState
   {static}-keyManager
   {static}-gameMode
@@ -255,8 +257,8 @@ class State{
   {static}+setGameMode(gameMode:int)
   {static}+getGameMode():int
   ..Abstract..
-  //+update()//
-  //+render(g:Graphics)//
+  {abstract}+update()
+  {abstract}+render(g:Graphics)
 }
 
 class KeyManager{
