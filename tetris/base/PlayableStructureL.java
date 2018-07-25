@@ -6,11 +6,11 @@ public class PlayableStructureL extends PlayableStructure {
 	private static final Color COLOR = Color.red;
 	public PlayableStructureL(int x, int y){
 		super(x, y);
-		Block[][] Blocks = new Block[SIZE][SIZE];
-		Blocks[2][2] = new Block(COLOR);
-		Blocks[2][3] = new Block(COLOR);
-		Blocks[3][3] = new Block(COLOR);
-		Blocks[2][1] = new Block(COLOR);
-		this.setBlocks(Blocks);
+		Block[][] blocks = new Block[SIZE][SIZE];
+		blocks[2][2] = new Block(COLOR);
+		blocks[2][3] = new Block(COLOR);
+		blocks[3][3] = new Block(COLOR);
+		blocks[2][1] = new Block(COLOR);
+		this.setBlocks(blocks);
 	}
 }
