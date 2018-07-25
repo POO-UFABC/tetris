@@ -3,14 +3,14 @@ package base;
 import java.awt.Color;
 
 public class PlayableStructureLine extends PlayableStructure {	
-	private static final Color color = Color.pink;
+	private static final Color COLOR = Color.pink;
 	public PlayableStructureLine(int x, int y){
 		super(x, y);
-		Block[][] Blocks = new Block[size][size];
-		Blocks[2][2] = new Block(color);
-		Blocks[1][2] = new Block(color);
-		Blocks[3][2] = new Block(color);
-		Blocks[4][2] = new Block(color);
-		this.setBlocks(Blocks);
+		Block[][] blocks = new Block[SIZE][SIZE];
+		blocks[2][2] = new Block(COLOR);
+		blocks[1][2] = new Block(COLOR);
+		blocks[3][2] = new Block(COLOR);
+		blocks[4][2] = new Block(COLOR);
+		this.setBlocks(blocks);
 	}
 }
