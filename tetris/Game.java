@@ -63,8 +63,14 @@ public class Game implements Runnable {
 		State.setKeyManager(this.keyManager);
 	}
 	
-	private void update() {		
-		State.getState().update();
+	private void update() {
+		try {
+			State.getState().update();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void render() {
@@ -101,30 +107,35 @@ public class Game implements Runnable {
 	
 	@Override
 	public void run() {
+		try{
+			init();
 		
-		init();
-		
-		while(running) {
-			Time.now = System.nanoTime();
-			Time.delta += (Time.now - Time.lastTime) / Time.timePerTick;
-			Time.timer += Time.now - Time.lastTime;
-			Time.lastTime = Time.now;
-			
-			if(Time.delta >= 1) {
-				update();
-				render();
-				Time.ticks++;
-				Time.delta--;
+			while(running) {
+				Time.now = System.nanoTime();
+				Time.delta += (Time.now - Time.lastTime) / Time.timePerTick;
+				Time.timer += Time.now - Time.lastTime;
+				Time.lastTime = Time.now;
+				
+				if(Time.delta >= 1) {
+					update();
+					render();
+					Time.ticks++;
+					Time.delta--;
+				}
+				
+				if(Time.timer >= 1000000000) {
+					Time.ticks = 0;
+					Time.timer = 0;
+				}
 			}
 			
-			if(Time.timer >= 1000000000) {
-				Time.ticks = 0;
-				Time.timer = 0;
-			}
+			stop();
+	
 		}
-		
-		stop();
-		
+		catch (Exception e) {
+			e.printStackTrace();;
+		}
+
 	}
 	
 	//Finalizar o jogo e encerrar as threads
