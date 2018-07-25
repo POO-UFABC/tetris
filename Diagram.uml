@@ -18,7 +18,7 @@ Package base{
   class Timer
 }
 
-Structure	*-right- Block
+Structure	*-- Block
 Structure	<|-left- FixedStructure
 Structure <|-- MobileStructure
 MobileStructure <|-- PlayableStructure
@@ -30,6 +30,7 @@ PlayableStructure <|-- PlayableStructureLine
 PlayableStructure <|-- PlayableStructureT
 PlayableStructure <|-- PlayableStructureSquare
 Runnable <|.down. Timer
+Randomizer *.. PlayableStructure
 
 interface Runnable<<Interface>>{ 
 
@@ -53,7 +54,9 @@ Package io{
   class KeyManager
 }
 
-interface KeyListener<<Interface>>{}
+interface KeyListener<<Interface>>{
+
+}
 
  KeyListener <|.. KeyManager
 
@@ -62,6 +65,7 @@ Package time{
 }
 
 KeyManager o-- Time
+State *-- KeyManager  
 
 class Block{
   <<final>>{static}+side:int
@@ -289,7 +293,7 @@ class KeyManager{
 
 class Display{
   -frame:JFrame
-  -canvas:canvas
+  -canvas:Canvas
   -title:String
   -width:int
   -height:int
@@ -314,6 +318,47 @@ class Time{
   {static}+timer:long
   {static}+ticks:int
   __
+}
+
+Runnable <|.. Game
+Game *-- KeyManager
+Game *-- Display
+Game *-- State
+class Game {
+  -display:Display
+  -width:int
+  -height:int
+  +title:String
+  -running:boolean
+  -thread:Thread
+  -bs:BufferStrategy
+  -g:Graphics
+  +gameState:State
+  +menuState:State
+  -keyManager:KeyManager
+  __
+  ..Constructor..
+  +Game(title:String)
+  ..Synchronized..
+  +start()
+  +stop()
+  ..Override..
+  +run()
+  ..
+  -init()
+  -update()
+  -render()
+  +getKeyManager:KeyManager
+  +getWidth():int
+  +getHeight():int
+  +getDisplay():Display
+}
+
+Tetris *.. Game
+
+class Tetris {
+  __
+  {static}+main(args:String[])
 }
 
 @enduml
