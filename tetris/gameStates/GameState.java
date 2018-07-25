@@ -11,11 +11,11 @@ public class GameState extends State{
 	private FixedStructure fixedStructure;
 	private PlayableStructure playableStructure;
 	
-	private final int initialPosX = 5;
-	private final int initialPosY = 23;
+	private final int INITIAL_POS_X = 5;
+	private final int INITIAL_POS_Y = 23;
 
-	private final int borderSizeX = 15;
-	private final int borderSizeY = 25;
+	private final int BORDER_SIZE_X = 15;
+	private final int BORDER_SIZE_Y = 25;
 
 	private Thread timerThread;
 	private Timer timer;
@@ -27,8 +27,8 @@ public class GameState extends State{
 	public GameState() {
 		this.randomizer = new Randomizer();
 
-		this.fixedStructure = new FixedStructure(0, 0, borderSizeX, borderSizeY);
-		this.playableStructure = this.randomizer.getRandomPiece(initialPosX, initialPosY);
+		this.fixedStructure = new FixedStructure(0, 0, BORDER_SIZE_X, BORDER_SIZE_Y);
+		this.playableStructure = this.randomizer.getRandomPiece(INITIAL_POS_X, INITIAL_POS_Y);
 
 		this.timer = new Timer(500 - this.getGameMode()*200);
 		this.timerThread = new Thread(timer);
@@ -41,7 +41,7 @@ public class GameState extends State{
 			boolean[] keys = this.updateKeys();
 
 			if (playableStructure.getBlocks() == null) {
-				this.playableStructure = this.randomizer.getRandomPiece(initialPosX, initialPosY);
+				this.playableStructure = this.randomizer.getRandomPiece(INITIAL_POS_X, INITIAL_POS_Y);
 			}
 
 			if (keys[0]) {
