@@ -1,6 +1,7 @@
 package base;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class FixedStructure extends Structure {
 	private static int DEFAULT_WIDTH = 10;
@@ -193,8 +194,8 @@ public class FixedStructure extends Structure {
 			for (int y = 0; y < this.height; y++) {
 				Block b = this.getBlocks()[x][y];
 				if (b != null){
-					int px = (this.getPosX()*b.side) + (x * b.side);
-					int py = displayHeight - b.side - ((this.getPosY()*b.side) + (y * b.side));
+					int px = (this.getPosX()*b.SIDE) + (x * b.SIDE);
+					int py = displayHeight - b.SIDE - ((this.getPosY()*b.SIDE) + (y * b.SIDE));
 					b.render(px, py, g);
 				}
 			}
