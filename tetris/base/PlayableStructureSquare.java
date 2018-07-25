@@ -3,15 +3,15 @@ package base;
 import java.awt.Color;
 
 public class PlayableStructureSquare extends PlayableStructure {	
-	private static final Color color = Color.cyan;
+	private static final Color COLOR = Color.cyan;
 	public PlayableStructureSquare(int x, int y){
 		super(x, y);
-		Block[][] Blocks = new Block[size][size];
-		Blocks[2][2] = new Block(color);
-		Blocks[3][2] = new Block(color);
-		Blocks[2][1] = new Block(color);
-		Blocks[3][1] = new Block(color);
-		this.setBlocks(Blocks);
+		Block[][] blocks = new Block[SIZE][SIZE];
+		blocks[2][2] = new Block(COLOR);
+		blocks[3][2] = new Block(COLOR);
+		blocks[2][1] = new Block(COLOR);
+		blocks[3][1] = new Block(COLOR);
+		this.setBlocks(blocks);
 	}
 
 	@Override
