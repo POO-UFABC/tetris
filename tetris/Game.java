@@ -51,7 +51,7 @@ public class Game implements Runnable {
 	
 	
 	private void init() {
-		width = 500;
+		width = 300;
 		height = 700;
 		display = new Display(title, width, height);//Título, altura, largura da janela
 		display.getFrame().addKeyListener(keyManager);
