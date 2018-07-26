@@ -3,7 +3,7 @@ package base;
 import java.awt.Color;
 
 public class PlayableStructureInvL extends PlayableStructure {	
-	private static final Color COLOR = Color.blue;
+	private static final Color COLOR = new Color(148,0,211);
 	public PlayableStructureInvL(int x, int y){
 		super(x, y);
 		Block[][] blocks = new Block[SIZE][SIZE];
