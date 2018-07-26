@@ -3,7 +3,7 @@ package base;
 import java.awt.Color;
 
 public class PlayableStructureLine extends PlayableStructure {	
-	private static final Color COLOR = Color.pink;
+	private static final Color COLOR = new Color(255,20,147);
 	public PlayableStructureLine(int x, int y){
 		super(x, y);
 		Block[][] blocks = new Block[SIZE][SIZE];
