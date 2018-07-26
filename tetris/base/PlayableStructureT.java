@@ -3,7 +3,7 @@ package base;
 import java.awt.Color;
 
 public class PlayableStructureT extends PlayableStructure {	
-	private static final Color COLOR = Color.orange;
+	private static final Color COLOR = new Color(255,69,0);
 	public PlayableStructureT(int x, int y){
 		super(x, y);
 		Block[][] blocks = new Block[SIZE][SIZE];
