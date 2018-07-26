@@ -40,23 +40,23 @@ public class MenuState extends State{
 	@Override
 	public void render(Graphics g) {	  
 		g.setColor(Color.white);
-		g.drawString("=TETRIS=", 210, 200);
+		g.drawString("=TETRIS=", 110, 200);
 		
 		if (this.getGameMode() == 0){
-		  g.drawString(">Facil<", 120, 260);
-		  g.drawString("Medio", 200, 260);
-		  g.drawString("Dificil", 290, 260);
+		  g.drawString(">Facil<", 50, 260);
+		  g.drawString("Medio", 120, 260);
+		  g.drawString("Dificil", 190, 260);
 		
 		} else if (this.getGameMode() == 1){
-		  g.drawString("Facil", 120, 260);
-		  g.drawString(">Medio<", 200, 260);
-		  g.drawString("Dificil", 290, 260);
+		  g.drawString("Facil", 50, 260);
+		  g.drawString(">Medio<", 120, 260);
+		  g.drawString("Dificil", 190, 260);
 		
 		} else if (this.getGameMode() == 2) {
 		
-		  g.drawString("Facil", 120, 260);
-		  g.drawString("Medio", 200, 260);
-		  g.drawString(">Dificil<", 290, 260);
+		  g.drawString("Facil", 50, 260);
+		  g.drawString("Medio", 120, 260);
+		  g.drawString(">Dificil<", 190, 260);
 		}
 	}
 
