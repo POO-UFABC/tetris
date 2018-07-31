@@ -6,8 +6,8 @@ public class PlayableStructure extends MobileStructure {
 	/**
 	* toda peça devem ser [5][5], sendo Block [2][2] o pivot.
 	*/
-	public static final int SIZE = 5;
-	
+	protected static final int SIZE = 5;
+
 	/**
 	*Super deverá chamar com Largura/2-2 e Altura-3, sendo Largura e Altura atributos da Structure Fixa.
 	*Não é necessário chamar da própria Structure fixa pois esse tamanho será definido ainda no desenvolvimento e não será modificado.
@@ -90,12 +90,12 @@ public class PlayableStructure extends MobileStructure {
 	public void render(int displayHeight, Graphics g) {
 		if (this.getBlocks() == null)
 			return;
-		for (int x = 0; x < this.SIZE; x++) {
-			for (int y = 0; y < this.SIZE; y++) {
+		for (int x = 0; x < SIZE; x++) {
+			for (int y = 0; y < SIZE; y++) {
 				Block b = this.getBlocks()[x][y];
 				if (b != null){
-					int px = this.getPosX()*b.SIDE + x * b.SIDE;
-					int py = displayHeight - b.SIDE - ((this.getPosY()*b.SIDE) + (y*b.SIDE));
+					int px = this.getPosX()*Block.getSIDE() + x * Block.getSIDE();
+					int py = displayHeight - Block.getSIDE() - ((this.getPosY()*Block.getSIDE()) + (y*Block.getSIDE()));
 					b.render(px, py, g);
 				}
 			}

@@ -111,22 +111,14 @@ public class Game implements Runnable {
 			init();
 		
 			while(running) {
-				Time.now = System.nanoTime();
-				Time.delta += (Time.now - Time.lastTime) / Time.timePerTick;
-				Time.timer += Time.now - Time.lastTime;
-				Time.lastTime = Time.now;
 				
-				if(Time.delta >= 1) {
+				Time.update();
+				if(Time.getDelta() >= 1) {
 					update();
 					render();
-					Time.ticks++;
-					Time.delta--;
+					Time.updateTicksDelta();
 				}
-				
-				if(Time.timer >= 1000000000) {
-					Time.ticks = 0;
-					Time.timer = 0;
-				}
+				Time.updateTimer();
 			}
 			
 			stop();

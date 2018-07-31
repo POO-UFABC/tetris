@@ -15,7 +15,11 @@ Package base{
   class PlayableStructureZ
   class Randomizer
   class Structure
+}
+
+Package time{
   class Timer
+  class Time
 }
 
 Structure	*-- Block
@@ -60,15 +64,11 @@ interface KeyListener<<Interface>>{
 
  KeyListener <|.. KeyManager
 
-Package time{
-  class Time
-}
-
 KeyManager o-- Time
 State *-- KeyManager  
 
 class Block{
-  <<final>>{static}+side:int
+  {static}-SIDE:int
   -color:Color
   __
   ..Constructor..
@@ -77,6 +77,7 @@ class Block{
   ..Getter & Setter..
   +setColor(color:Color)
   +getColor():Color
+  {static}+getSIDE():int
   ..
   +render(x:int, y:int, g:Graphics)
 }
@@ -118,7 +119,7 @@ class MobileStructure{
 }
 
 class PlayableStructure{
-  <<final>>{static}+size:int
+  {static}#SIZE:int
   __
   ..Constructor..
   +PlayableStructure(components:Block[][])
@@ -135,35 +136,35 @@ class PlayableStructure{
 }
 
 class PlayableStructureInvL{
-  <<final>>{static}-color:Color
+  {static}-COLOR:Color
   __
   ..Constructor..
   +PlayableStructureInvL(x:int,y:int)
 }
 
 class PlayableStructureInvZ{
-  <<final>>{static}-color:Color
+  {static}-COLOR:Color
   __
   ..Constructor..
   +PlayableStructureInvZ(x:int,y:int)
 }
 
 class PlayableStructureL{
-  <<final>>{static}-color:Color
+  {static}-COLOR:Color
   __
   ..Constructor..
   +PlayableStructureL(x:int,y:int)
 }
 
 class PlayableStructureLine{
-  <<final>>{static}-color:Color
+  {static}-COLOR:Color
   __
   ..Constructor..
   +PlayableStructureLine(x:int,y:int)
 }
 
 class PlayableStructureSquare{
-  <<final>>{static}-color:Color
+  {static}-COLOR:Color
   __
   ..Constructor..
   +PlayableStructureSquare(x:int,y:int)
@@ -172,14 +173,14 @@ class PlayableStructureSquare{
 }
 
 class PlayableStructureT{
-  <<final>>{static}-color:Color
+  {static}-COLOR:Color
   __
   ..Constructor..
   +PlayableStructureT(x:int,y:int)
 }
 
 class PlayableStructureZ{
-  <<final>>{static}-color:Color
+  {static}-COLOR:Color
   __
   ..Constructor..
   +PlayableStructureZ(x:int,y:int)
@@ -222,10 +223,10 @@ class Timer{
 class GameState{
   -fixedStructure:FixedStructure
   -playableStructure:PlayableStructure
-  <<final>>-initialPosX:int
-  <<final>>-initialPosY:int
-  <<final>>-borderSizeX:int
-  <<final>>-borderSizeY:int
+  -INITIAL_POS_X:int
+  -INITIAL_POS_Y:int
+  -BORDER_SIZE_X:int
+  -BORDER_SIZE_Y:int
   -timerThread:Thread
   -timer:Timer
   -randomizer:Randomizer
@@ -309,7 +310,7 @@ class Display{
   -createDisplay()
 }
 
-class Time{
+class Time<<Singleton>>{
   {static}+fps:int
   {static}+timePerTick:double
   {static}+delta:double
@@ -318,6 +319,16 @@ class Time{
   {static}+timer:long
   {static}+ticks:int
   __
+  ..Constructor..
+  -Time()
+  ..
+  {static}+update()
+  {static}+updateTimer()
+  {static}+updateTicksDelta()
+  {static}+getTime():Time
+  {static}+getDelta():double
+  {static}+getNow():long
+  {static}+getTimePerTick():double
 }
 
 Runnable <|.. Game

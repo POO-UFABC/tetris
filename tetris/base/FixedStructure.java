@@ -164,7 +164,7 @@ public class FixedStructure extends Structure {
 	}
 
 	public boolean blockExistsDown(MobileStructure mobileStructure){
-		int posX = mobileStructure.getPosX();
+		//int posX = mobileStructure.getPosX();
 		int posY = mobileStructure.getPosY();
 		//Por enquanto está iterando todos os Blocks de móvel (que provavelmente serão, no máximo, 25 Blocks). Talvez haja solução melhor
 		for(int x = 1; x < this.getWidth()-1; x++){
@@ -194,8 +194,8 @@ public class FixedStructure extends Structure {
 			for (int y = 0; y < this.height; y++) {
 				Block b = this.getBlocks()[x][y];
 				if (b != null){
-					int px = (this.getPosX()*b.SIDE) + (x * b.SIDE);
-					int py = displayHeight - b.SIDE - ((this.getPosY()*b.SIDE) + (y * b.SIDE));
+					int px = (this.getPosX()*Block.getSIDE()) + (x * Block.getSIDE());
+					int py = displayHeight - Block.getSIDE() - ((this.getPosY()*Block.getSIDE()) + (y * Block.getSIDE()));
 					b.render(px, py, g);
 				}
 			}

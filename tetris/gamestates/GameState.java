@@ -7,6 +7,8 @@ import gamestates.MenuState;
 
 import base.*;
 
+import time.*;
+
 public class GameState extends State{			
 	private FixedStructure fixedStructure;
 	private PlayableStructure playableStructure;

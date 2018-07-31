@@ -23,8 +23,8 @@ public class KeyManager implements KeyListener{
 	  this.left  = false;
 	  this.right = false;
 		this.zero  = false;
-		this.interval = Time.timePerTick*20;
-		this.last  = this.interval;
+		this.interval = Time.getTimePerTick()*20;
+		this.last  = Time.getNow();
 	}
 	
 	//Método para setar os valores de cada comando em verdadeiro ou falso
@@ -41,7 +41,7 @@ public class KeyManager implements KeyListener{
 		if (event.getKeyCode() == KeyEvent.VK_NUMPAD0) {
 		  this.zero = state;
 		}
-		this.last = Time.now;
+		this.last = Time.getNow();
 	}
 	
 	@Override
@@ -69,7 +69,7 @@ public class KeyManager implements KeyListener{
 	    this.justPressedDown = false;
 	  }
 	  /*return false;*/
-	  if((Time.now-last)>=interval) return this.down;
+	  if((Time.getNow()-last)>=interval) return this.down;
 	  else return false;
 	}
 
@@ -82,7 +82,7 @@ public class KeyManager implements KeyListener{
 	    this.justPressedLeft = false;
 	  }
 	  /*return false;*/
-	  if((Time.now-last)>=interval) return this.left;
+	  if((Time.getNow()-last)>=interval) return this.left;
 	  else return false;
 	}
 	
@@ -95,7 +95,7 @@ public class KeyManager implements KeyListener{
 	    this.justPressedRight = false;
 	  }
 	  /*return false;*/
-	  if((Time.now-last)>=interval) 
+	  if((Time.getNow()-last)>=interval) 
 		return this.right;
 	  else 
 		return false;

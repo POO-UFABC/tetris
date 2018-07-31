@@ -28,12 +28,12 @@ public class MenuState extends State{
 	}
 	
 	private void incrementGameMode(int increment) {
-		this.setGameMode(this.getGameMode() + increment);
-		if (this.getGameMode() > 2) {
-		  this.setGameMode(0);
+		State.setGameMode(State.getGameMode() + increment);
+		if (State.getGameMode() > 2) {
+		  State.setGameMode(0);
 		}
-		else if (this.getGameMode() < 0) {
-		  this.setGameMode(2);
+		else if (State.getGameMode() < 0) {
+		  State.setGameMode(2);
 		}
 	}
 
@@ -42,17 +42,17 @@ public class MenuState extends State{
 		g.setColor(Color.white);
 		g.drawString("=TETRIS=", 110, 200);
 		
-		if (this.getGameMode() == 0){
+		if (State.getGameMode() == 0){
 		  g.drawString(">Facil<", 50, 260);
 		  g.drawString("Medio", 120, 260);
 		  g.drawString("Dificil", 190, 260);
 		
-		} else if (this.getGameMode() == 1){
+		} else if (State.getGameMode() == 1){
 		  g.drawString("Facil", 50, 260);
 		  g.drawString(">Medio<", 120, 260);
 		  g.drawString("Dificil", 190, 260);
 		
-		} else if (this.getGameMode() == 2) {
+		} else if (State.getGameMode() == 2) {
 		
 		  g.drawString("Facil", 50, 260);
 		  g.drawString("Medio", 120, 260);

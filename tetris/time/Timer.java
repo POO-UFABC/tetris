@@ -1,4 +1,4 @@
-package base;
+package time;
 
 public class Timer implements Runnable{
   private boolean triggered = false;
