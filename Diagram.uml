@@ -65,6 +65,7 @@ interface KeyListener<<Interface>>{
  KeyListener <|.. KeyManager
 
 KeyManager o-- Time
+Game o.. Time
 State *-- KeyManager  
 
 class Block{
